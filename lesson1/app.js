@@ -69,31 +69,3 @@
 //         });
 //     });
 // });
-
-// function sortingFiles(links) {
-//     fs.readdir(links, (err, files) => {
-//         err ? console.log(err) : null;
-//
-//         files.forEach(fileNames => {
-//             const pathFiles = path.join(links, fileNames);
-//             fs.stat(pathFiles, (err1, stats) => {
-//                 if (stats.isDirectory()) {
-//                     console.log(true);
-//                     return sort(pathFiles);
-//                 }
-//
-//                 console.log(false)
-//                 const pathSort = path.join(__dirname, 'sortFiles', fileNames);
-//                 fs.rename(pathFiles, pathSort,
-//                     err => {
-//                         if (err) {
-//                             console.log(err);
-//                             return;
-//                         }
-//                     })
-//             })
-//         })
-//     });
-// };
-//
-// sortFiles(randomFiles);
