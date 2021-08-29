@@ -8,23 +8,27 @@ router.get('/',
 );
 
 router.get('/:userId',
+    userMiddleware.isUserByIdExists,
     userMiddleware.userCheckId,
     userMiddleware.isUserHave,
     userController.getUserById
 );
 
 router.post('/',
+    userMiddleware.isUserTrue,
     userMiddleware.isUserHave,
     userController.createUser
 );
 
 router.put('/:userId',
+    userMiddleware.isUserByIdExists,
     userMiddleware.userCheckId,
     userMiddleware.isUserHave,
     userController.updateUserById
 );
 
 router.delete('/:userId',
+    userMiddleware.isUserByIdExists,
     userMiddleware.userCheckId,
     userController.deleteUser
 );
