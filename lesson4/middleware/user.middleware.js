@@ -21,26 +21,13 @@ module.exports = {
         }
     },
 
-    userCheckId: (req, res, next) => {
-        try {
-            const userId = +req.params.userId;
-
-            if (userId < 0 || !Number.isInteger(userId) || Number.isNaN(userId))
-                throw new ErrorHandler(errorMessages.WRONG_ID.en , statusCodes.BAD_REQUEST);
-
-            next();
-        } catch (e) {
-            next(e);
-        }
-    },
-
     isUserByIdExists: async (req, res, next) => {
         try {
             const { userId } = req.params;
 
             const user = await User.findById(userId);
 
-            if (!user) throw new ErrorHandler(errorMessages.EMAIL_ALLREADY_USE, statusCodes.BAD_REQUEST);
+            if (!user) next(new ErrorHandler(errorMessages.EMAIL_ALLREADY_USE, statusCodes.BAD_REQUEST))
 
             req.user = user;
 
@@ -56,7 +43,7 @@ module.exports = {
 
             const user = await User.findOne({ email });
 
-            if (user) throw new ErrorHandler(errorMessages.EMAIL_ALLREADY_USE.en, statusCodes.CONFLICT);
+            if (user) next(new ErrorHandler(errorMessages.EMAIL_ALLREADY_USE.en, statusCodes.CONFLICT));
 
             next();
         } catch (e) {
