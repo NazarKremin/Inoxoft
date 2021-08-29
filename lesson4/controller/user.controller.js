@@ -1,4 +1,5 @@
 const { userService } = require('../service');
+const { statusCodes } = require('../constans')
 const ErrorHandler = require("../errors/error.messages");
 
 module.exports = {
@@ -6,7 +7,7 @@ module.exports = {
         try {
             await userService.createUser(req.body);
 
-            res.status(201).json('User done');
+            res.status(statusCodes.CRATED).json('User done');
         } catch (e) {
             next(e);
         }
@@ -18,7 +19,7 @@ module.exports = {
 
             await userService.updateUserById(userId, {...req.body});
 
-            res.status(201).json('User done');
+            res.status(statusCodes.ACCEPTED).json('User done');
         } catch (e) {
             next(e)
         }
@@ -28,7 +29,7 @@ module.exports = {
         try {
             const users = await userService.allUsers();
 
-            res.json(users);
+            res.status(statusCodes.OK).json(users);
         } catch (e) {
             next(e)
         }
@@ -40,9 +41,9 @@ module.exports = {
 
             const user = await userService.userById(userId);
 
-            if (!user) throw new ErrorHandler(404, 'User Not Found')
+            if (!user) throw new ErrorHandler(statusCodes.METHOD_NOT_ALLOWED, 'User Not Found')
 
-            res.json(user);
+            res.status(statusCodes.OK).json(user);
         } catch (e) {
             next(e)
         }
@@ -53,7 +54,7 @@ module.exports = {
 
             await userService.deleteUserById(userId);
 
-            res.json('User removed');
+            res.status(statusCodes.OK).json('User removed');
         } catch (e) {
             next(e)
         }

@@ -1,11 +1,12 @@
 const { carService } = require('../service');
+const {statusCodes} = require("../constans");
 
 module.exports = {
     createCar: async (req, res, next) => {
         try {
             await carService.createCar(req.body);
 
-            res.status(201).json('Car done');
+            res.status(statusCodes.CRATED).json('Car done');
         } catch (e) {
             next(e);
         }
@@ -15,7 +16,7 @@ module.exports = {
         try {
             const cars = await carService.allCars();
 
-            res.status(200).json(cars);
+            res.status(statusCodes.OK).json(cars);
         } catch (e) {
             next(e);
         }
@@ -27,7 +28,7 @@ module.exports = {
 
             const user = await carService.carById(carId);
 
-            res.status(200).json(user);
+            res.status(statusCodes.OK).json(user);
         } catch (e) {
             next(e);
         }
@@ -38,7 +39,7 @@ module.exports = {
 
             await carService.deleteCarById(carId);
 
-            res.status(200).json('Car removed');
+            res.status(statusCodes.OK).json('Car removed');
         } catch (e) {
             next(e);
         }
