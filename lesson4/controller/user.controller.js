@@ -1,6 +1,7 @@
 const { userService } = require('../service');
 const { statusCodes } = require('../constans')
-const ErrorHandler = require("../errors/error.messages");
+const ErrorHandler = require('../errors/error.messages');
+const { userUtils } = require('../utils');
 
 module.exports = {
     createUser: async (req, res, next) => {
@@ -41,9 +42,11 @@ module.exports = {
 
             const user = await userService.userById(userId);
 
+            const normalUser = userUtils.userNormalizer(user);
+
             if (!user) throw new ErrorHandler(statusCodes.METHOD_NOT_ALLOWED, 'User Not Found')
 
-            res.status(statusCodes.OK).json(user);
+            res.status(statusCodes.OK).json(normalUser);
         } catch (e) {
             next(e)
         }

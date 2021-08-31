@@ -26,5 +26,9 @@ module.exports = {
     EMAIL_ALLREADY_USE: {
         en: 'Email already use',
         ua: 'Цей мейл вже використовується'
+    },
+    USER_NOT_VALID: {
+        en: 'User not valid',
+        ua: 'Непрвильний ммейл або пасс'
     }
 };

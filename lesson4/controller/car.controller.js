@@ -1,10 +1,15 @@
 const { carService } = require('../service');
-const {statusCodes} = require("../constans");
+const { statusCodes } = require('../constans');
+const { passwordHash } = require('../helpers');
 
 module.exports = {
     createCar: async (req, res, next) => {
         try {
-            await carService.createCar(req.body);
+            const { password } = req.body;
+
+            const hashPassword = await passwordHash.hash(password);
+
+            await carService.createCar({...req.body, password: hashPassword });
 
             res.status(statusCodes.CRATED).json('Car done');
         } catch (e) {

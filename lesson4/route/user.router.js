@@ -13,6 +13,7 @@ router.get('/:userId',
 );
 
 router.post('/',
+    userMiddleware.checkNewUserValidation,
     userMiddleware.isUserTrue,
     userMiddleware.isUserHave,
     userController.createUser
