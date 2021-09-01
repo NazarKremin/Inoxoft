@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 
 const app = express();
 
+require('dotenv').config();
+
 const {PORT, MONGO_URL} = require('./config');
 const apiRouter = require('./route/api.router');
 

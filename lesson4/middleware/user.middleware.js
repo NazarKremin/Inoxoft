@@ -7,7 +7,7 @@ module.exports = {
 
     isUserTrue: (req, res, next) => {
         try {
-            const {name, email, preferL = 'en'} = req.body;
+            const { name, email, preferL = 'en' } = req.body;
 
             if (email.length < 8) next(new ErrorHandler(statusCodes.BAD_REQUEST, errorMessages.EMAIL_IS_WRONG[preferL]));
 
@@ -21,7 +21,7 @@ module.exports = {
 
     isUserByIdExists: async (req, res, next) => {
         try {
-            const {userId} = req.params;
+            const { userId } = req.params;
 
             const user = await User.findById(userId);
 
@@ -37,9 +37,9 @@ module.exports = {
 
     isUserHave: async (req, res, next) => {
         try {
-            const {email} = req.body;
+            const { email } = req.body;
 
-            const user = await User.findOne({email});
+            const user = await User.findOne({ email });
 
             if (user) next(new ErrorHandler(statusCodes.CONFLICT, errorMessages.EMAIL_ALLREADY_USE.en));
 
@@ -51,7 +51,7 @@ module.exports = {
 
     checkNewUserValidation: (req, res, next) => {
         try {
-            const {error} = userValidators.createUserValidator.registerUserValidator.valid(req.body);
+            const { error } = userValidators.createUserValidator.registerUserValidator.valid(req.body);
 
             if (error) next(new ErrorHandler(statusCodes.BAD_REQUEST, errorMessages.USER_NOT_VALID));
 
@@ -63,7 +63,7 @@ module.exports = {
 
     checkUpdateUserValidation: (req, res, next) => {
         try {
-            const {error} = userValidators.createUserValidator.updateUserValidator.valid(req.body, req.params);
+            const { error } = userValidators.createUserValidator.updateUserValidator.valid(req.body, req.params);
 
             if (error) next(new ErrorHandler(statusCodes.BAD_REQUEST, errorMessages.WRONG_ID));
 
@@ -75,7 +75,7 @@ module.exports = {
 
     checkUserLogin: (req, res, next) => {
         try {
-            const {error} = userValidators.createUserValidator.userLoginValidator.valid(req.body);
+            const { error } = userValidators.createUserValidator.userLoginValidator.valid(req.body);
 
             if (error) next(new ErrorHandler(statusCodes.BAD_REQUEST, errorMessages.EMAIL_IS_WRONG));
 
@@ -89,7 +89,35 @@ module.exports = {
         try {
             const { error } = userValidators.createUserValidator.userByIdValidator.valid(req.params);
 
-            if (error) next (new ErrorHandler(statusCodes.BAD_REQUEST, errorMessages.WRONG_ID));
+            if (error) next(new ErrorHandler(statusCodes.BAD_REQUEST, errorMessages.WRONG_ID));
+
+            next();
+        } catch (e) {
+            next(e);
+        }
+    },
+
+    checkUSerRole: (roles = []) => (req, res, next) => {
+        try {
+            const { role } = req.user;
+
+            if (!roles.length) return next();
+
+            if (!roles.includes(role)) next(new ErrorHandler(statusCodes.FORBIDDEN, errorMessages.WRONG_NAME));
+
+            next();
+        } catch (e) {
+            next(e);
+        }
+    },
+
+    getUserByDynamicPara: (paramName, searchIn = 'body', dbField = paramName) => async (req, res, next) => {
+        try {
+            const value = req[searchIn][paramName];
+
+            const user = await User.findOne({ [dbField]: value });
+
+            req.user = user;
 
             next();
         } catch (e) {

@@ -3,13 +3,14 @@ const router = require('express').Router();
 const { userController } = require('../controller');
 const { userMiddleware } = require('../middleware');
 
-router.get('/',
-    userController.getAllUsers
+const { userRole } = require('../constans');
+
+router.use('/:userId',
+    userMiddleware.isUserByIdExists
 );
 
-router.get('/:userId',
-    userMiddleware.isUserByIdExists,
-    userController.getUserById
+router.get('/',
+    userController.getAllUsers
 );
 
 router.post('/',
@@ -19,13 +20,16 @@ router.post('/',
     userController.createUser
 );
 
+router.get('/:userId',
+    // userMiddleware.checkUSerRole([userRole.ADMIN]),
+    userController.getUserById
+);
+
 router.put('/:userId',
-    userMiddleware.isUserByIdExists,
     userController.updateUserById
 );
 
 router.delete('/:userId',
-    userMiddleware.isUserByIdExists,
     userController.deleteUser
 );
 
