@@ -25,7 +25,7 @@ module.exports = {
 
             const user = await User.findById(userId);
 
-            if (!user) next(new ErrorHandler(statusCodes.BAD_REQUEST, errorMessages.EMAIL_ALLREADY_USE))
+            if (!user) next(new ErrorHandler(statusCodes.BAD_REQUEST, errorMessages.EMAIL_ALLREADY_USE.en))
 
             req.user = user;
 
@@ -53,7 +53,7 @@ module.exports = {
         try {
             const { error } = userValidators.createUserValidator.registerUserValidator.valid(req.body);
 
-            if (error) next(new ErrorHandler(statusCodes.BAD_REQUEST, errorMessages.USER_NOT_VALID));
+            if (error) next(new ErrorHandler(statusCodes.BAD_REQUEST, errorMessages.USER_NOT_VALID.en));
 
             next();
         } catch (e) {
@@ -65,7 +65,7 @@ module.exports = {
         try {
             const { error } = userValidators.createUserValidator.updateUserValidator.valid(req.body, req.params);
 
-            if (error) next(new ErrorHandler(statusCodes.BAD_REQUEST, errorMessages.WRONG_ID));
+            if (error) next(new ErrorHandler(statusCodes.BAD_REQUEST, errorMessages.WRONG_ID.en));
 
             next();
         } catch (e) {
@@ -77,7 +77,7 @@ module.exports = {
         try {
             const { error } = userValidators.createUserValidator.userLoginValidator.valid(req.body);
 
-            if (error) next(new ErrorHandler(statusCodes.BAD_REQUEST, errorMessages.EMAIL_IS_WRONG));
+            if (error) next(new ErrorHandler(statusCodes.BAD_REQUEST, errorMessages.EMAIL_IS_WRONG.en));
 
             next();
         } catch (e) {
@@ -89,7 +89,7 @@ module.exports = {
         try {
             const { error } = userValidators.createUserValidator.userByIdValidator.valid(req.params);
 
-            if (error) next(new ErrorHandler(statusCodes.BAD_REQUEST, errorMessages.WRONG_ID));
+            if (error) next(new ErrorHandler(statusCodes.BAD_REQUEST, errorMessages.WRONG_ID.en));
 
             next();
         } catch (e) {
@@ -103,7 +103,7 @@ module.exports = {
 
             if (!roles.length) return next();
 
-            if (!roles.includes(role)) next(new ErrorHandler(statusCodes.FORBIDDEN, errorMessages.WRONG_NAME));
+            if (!roles.includes(role)) next(new ErrorHandler(statusCodes.FORBIDDEN, errorMessages.WRONG_NAME.en));
 
             next();
         } catch (e) {

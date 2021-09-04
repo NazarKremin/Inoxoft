@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const { carController } = require('../controller');
-const { carMiddleware } = require('../middleware');
+const { carMiddleware, userMiddleware, authMiddleware } = require('../middleware');
 
 router.get('/',
     carMiddleware.isCarTrue,
@@ -10,16 +10,19 @@ router.get('/',
 
 router.post('/',
     carMiddleware.isCarTrue,
+    authMiddleware.checkAccessTokenMiddleware,
     carController.createCar
 );
 
 router.get('/:carId',
     carMiddleware.carCheckId,
+    authMiddleware.checkAccessTokenMiddleware,
     carController.getCarById
 );
 
 router.get('/:carId',
     carMiddleware.carCheckId,
+    authMiddleware.checkAccessTokenMiddleware,
     carController.deleteCar
 );
 

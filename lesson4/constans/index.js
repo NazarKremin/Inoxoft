@@ -1,6 +1,7 @@
 module.exports = {
-  statusCodes: require('./status-codes.enum'),
+  constans: require('./constans'),
   errorMessages: require('./error-massege.enum'),
+  regexpEnum: require('./regexp.enum'),
   userRole: require('./user-role.enum'),
-  regexpEnum: require('./regexp.enum')
+  statusCodes: require('./status-codes.enum'),
 };

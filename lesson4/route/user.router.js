@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const { userController } = require('../controller');
-const { userMiddleware } = require('../middleware');
+const { authMiddleware, userMiddleware } = require('../middleware');
 
 const { userRole } = require('../constans');
 
@@ -14,9 +14,9 @@ router.get('/',
 );
 
 router.post('/',
-    userMiddleware.checkNewUserValidation,
-    userMiddleware.isUserTrue,
-    userMiddleware.isUserHave,
+    // userMiddleware.checkNewUserValidation,
+    // userMiddleware.isUserTrue,
+    // userMiddleware.isUserHave,
     userController.createUser
 );
 
@@ -26,10 +26,12 @@ router.get('/:userId',
 );
 
 router.put('/:userId',
+    authMiddleware.checkAccessTokenMiddleware,
     userController.updateUserById
 );
 
 router.delete('/:userId',
+    authMiddleware.checkAccessTokenMiddleware,
     userController.deleteUser
 );
 

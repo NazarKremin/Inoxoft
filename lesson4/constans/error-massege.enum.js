@@ -30,5 +30,16 @@ module.exports = {
     USER_NOT_VALID: {
         en: 'User not valid',
         ua: 'Непрвильний ммейл або пасс'
+    },
+    TOKEN_NOT_VALID: {
+        en: 'Not valid token',
+        ua: 'Не валідний токен',
+    },
+    TOKEN_REQUIRED: {
+        en: 'No token',
+        ua: 'Немає токена',
+    },
+    INVALID_TOKEN: {
+        en: 'Invalid token'
     }
 };

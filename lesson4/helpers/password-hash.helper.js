@@ -8,7 +8,7 @@ module.exports = {
         const isPasswordEquals = await bcrypt.compare(password, hashPassword);
 
         if (!isPasswordEquals) {
-            throw new ErrorHandler(errorMessages.EMAIL_IS_WRONG, statusCodes.BAD_REQUEST);
+            throw new ErrorHandler(errorMessages.EMAIL_IS_WRONG.en, statusCodes.BAD_REQUEST);
         }
     }
 };

@@ -1,12 +1,17 @@
 const { userService } = require('../service');
 const { statusCodes } = require('../constans')
+const { passwordHash, tokenizer } = require('../helpers');
 const ErrorHandler = require('../errors/error.messages');
 const { userUtils } = require('../utils');
 
 module.exports = {
     createUser: async (req, res, next) => {
         try {
-            await userService.createUser(req.body);
+            const { body: { password, email }, avatar } = req;
+
+            const hasPassword = await passwordHash.hash(password);
+
+            const user = await userService.createUser({ ...req.body, password: hasPassword });
 
             res.status(statusCodes.CRATED).json('User done');
         } catch (e) {

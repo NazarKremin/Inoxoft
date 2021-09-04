@@ -34,7 +34,7 @@ module.exports = {
         try {
             const { error } = carValidators.createCarValidator.valid(req.body);
 
-            if (error) next(new ErrorHandler(statusCodes.BAD_REQUEST, errorMessages.NOT_VALID_MODEL || errorMessages.NOT_VALID_PRICE));
+            if (error) next(new ErrorHandler(statusCodes.BAD_REQUEST, errorMessages.NOT_VALID_MODEL.en || errorMessages.NOT_VALID_PRICE.en));
 
             next();
         } catch (e) {

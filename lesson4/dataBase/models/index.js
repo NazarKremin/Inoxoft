@@ -1,4 +1,5 @@
 module.exports = {
-  User: require('./User'),
-  Car: require('./Car')
+  O_Auth: require('./O_Auth'),
+  Car: require('./Car'),
+  User: require('./User')
 };
