@@ -1,11 +1,10 @@
 module.exports = {
-    // 100 Status code
+
     CONTINUE: 100,
     SWITCHING_PROTOCOLS: 101,
     PROCESSING: 102,
     EARLY_HINTS: 103,
 
-    // 200 Status code
     OK: 200,
     CRATED: 201,
     ACCEPTED: 202,
@@ -14,7 +13,6 @@ module.exports = {
     RESET_CONTENT: 205,
     PARTIAL_CONTENT: 206,
 
-    // 300 Status code
     MULTIPLE_CHOICE: 301,
     MOVED_PERMANENTLY: 302,
     FOUND: 303,
@@ -25,7 +23,6 @@ module.exports = {
     TEMPORARY_REDIRECT: 308,
     PERMANENT_REDIRECT: 309,
 
-    // 400 Status code
     BAD_REQUEST: 400,
     UNAUTHORIZED: 401,
     FORBIDDEN: 403,
@@ -43,7 +40,6 @@ module.exports = {
     REQUESTED_RANGE_NOT_SATISFIABLE: 415,
     EXPECTATION_FAILED: 416,
 
-    // 500 Status code
     SERVER_ERROR: 500,
     NOT_IMPLEMENTED: 501,
     BAD_GATEWAY: 502,
