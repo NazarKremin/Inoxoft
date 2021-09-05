@@ -19,15 +19,15 @@ module.exports = {
         }
     },
 
-    isUserByIdExists: async (req, res, next) => {
+    isUserByIdExists: (req, res, next) => {
         try {
-            const { userId } = req.params;
+            const { user } = req;
 
-            const user = await User.findById(userId);
+            // const user = await User.findById(userId);
 
             if (!user) next(new ErrorHandler(statusCodes.BAD_REQUEST, errorMessages.EMAIL_ALLREADY_USE.en))
 
-            req.user = user;
+            // req.user = user;
 
             next();
         } catch (e) {
@@ -37,9 +37,7 @@ module.exports = {
 
     isUserHave: async (req, res, next) => {
         try {
-            const { email } = req.body;
-
-            const user = await User.findOne({ email });
+            const { user } = req;
 
             if (user) next(new ErrorHandler(statusCodes.CONFLICT, errorMessages.EMAIL_ALLREADY_USE.en));
 
