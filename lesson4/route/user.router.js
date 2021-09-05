@@ -17,7 +17,7 @@ router.post('/',
     // userMiddleware.checkNewUserValidation,
     userMiddleware.getUserByDynamicPara('email'),
     // userMiddleware.isUserTrue,
-    userMiddleware.isUserHave,
+    // userMiddleware.isUserHave,
     userController.createUser
 );
 
