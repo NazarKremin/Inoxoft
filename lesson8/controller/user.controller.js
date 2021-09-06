@@ -1,5 +1,5 @@
 const { userService, mailService } = require('../service');
-const { statusCodes, emailAction } = require('../constans')
+const { statusCodes, emailAction, errorMessages} = require('../constans')
 const { passwordHash, tokenizer } = require('../helpers');
 const ErrorHandler = require('../errors/error.messages');
 const { userUtils } = require('../utils');
@@ -39,6 +39,8 @@ module.exports = {
         try {
             const users = await userService.allUsers();
 
+            console.log(users)
+
             res.status(statusCodes.OK).json(users);
         } catch (e) {
             next(e)
@@ -53,7 +55,7 @@ module.exports = {
 
             const normalUser = userUtils.userNormalizer(user);
 
-            if (!user) throw new ErrorHandler(statusCodes.METHOD_NOT_ALLOWED, 'User Not Found')
+            if (!user) throw new ErrorHandler(statusCodes.METHOD_NOT_ALLOWED, errorMessages.USER_NOT_FOUND.en)
 
             res.status(statusCodes.OK).json(normalUser);
         } catch (e) {

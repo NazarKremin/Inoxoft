@@ -44,5 +44,8 @@ module.exports = {
     },
     WRONG_EMAIL_ACTION: {
         en: 'Wrong email action'
+    },
+    USER_NOT_FOUND: {
+        en: 'User not found'
     }
 };
