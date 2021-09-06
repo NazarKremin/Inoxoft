@@ -41,5 +41,8 @@ module.exports = {
     },
     INVALID_TOKEN: {
         en: 'Invalid token'
+    },
+    WRONG_EMAIL_ACTION: {
+        en: 'Wrong email action'
     }
 };
