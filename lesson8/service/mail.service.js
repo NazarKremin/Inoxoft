@@ -25,7 +25,7 @@ const sendMail = async (userMail, action, context) => {
     try {
         const currentTemplateInfo = templateInfo[action];
 
-        if (!currentTemplateInfo) throw new ErrorHandler(statusCodes.BAD_REQUEST, errorMessages.WRONG_EMAIL_ACTION.en);
+        if (!currentTemplateInfo) throw new ErrorHandler(statusCodes.SERVER_ERROR, errorMessages.WRONG_EMAIL_ACTION.en);
 
         const html = await tempParser.render(currentTemplateInfo.templateName, context);
 
