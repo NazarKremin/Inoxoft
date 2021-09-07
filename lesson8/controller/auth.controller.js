@@ -2,7 +2,7 @@ const {User, O_Auth} = require('../dataBase/models');
 const { authService } = require('../service');
 const { passwordHash, tokenizer } = require('../helpers');
 const ErrorHandler = require('../errors/error.messages');
-const {statusCodes, errorMessages} = require("../constans");
+const {statusCodes, errorMessages, constans} = require("../constans");
 const {userUtils} = require("../utils");
 
 module.exports = {
@@ -35,7 +35,7 @@ module.exports = {
 
     logOut: async (req, res, next) => {
         try {
-            const token = req.get('Authorization');
+            const token = req.get(constans.AUTHORIZATION);
 
             if (!token) next(new ErrorHandler(statusCodes.UNAUTHORIZED, errorMessages.TOKEN_NOT_VALID.en));
 
@@ -65,7 +65,7 @@ module.exports = {
 
     refreshToken: async (req, res, next) => {
         try {
-            const token = req.get('Authorization');
+            const token = req.get(constans.AUTHORIZATION);
 
             const tokens = tokenizer();
 
