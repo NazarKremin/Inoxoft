@@ -47,5 +47,8 @@ module.exports = {
     },
     USER_NOT_FOUND: {
         en: 'User not found'
+    },
+    WRONG_TOKEN_TYPE: {
+        en: 'Wrong token type'
     }
 };

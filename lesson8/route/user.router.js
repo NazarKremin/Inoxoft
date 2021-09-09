@@ -9,6 +9,11 @@ router.use('/:userId',
     userMiddleware.isUserByIdExists
 );
 
+router.post('/new-admin',
+    userMiddleware.checkUSerRole([userRole.ADMIN]),
+    userController.createAdmin
+);
+
 router.get('/',
     userController.getAllUsers
 );

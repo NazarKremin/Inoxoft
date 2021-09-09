@@ -1,8 +1,11 @@
 const { userService, mailService } = require('../service');
-const { statusCodes, emailAction, errorMessages} = require('../constans')
+const { statusCodes, emailAction, errorMessages, userRole, actionTypesEnum} = require('../constans')
 const { passwordHash, tokenizer } = require('../helpers');
 const ErrorHandler = require('../errors/error.messages');
 const { userUtils } = require('../utils');
+const {User, ActionToken} = require("../dataBase/models");
+const {sendMail} = require("../service/mail.service");
+const {ADMIN_PASSWORD_SET} = require("../config");
 
 module.exports = {
     createUser: async (req, res, next) => {
@@ -73,4 +76,36 @@ module.exports = {
             next(e)
         }
     },
+
+    createAdmin: async (req, res, next) => {
+        try {
+            const { email, password, role } = req.body;
+
+            if (role !== userRole.ADMIN) next(new ErrorHandler(statusCodes.BAD_REQUEST, 'Your permission is low'));
+
+            const hashPassword = await passwordHash.hash(password);
+
+            const createdUser = await User.create({
+                email,
+                password: hashPassword,
+                role
+            });
+
+            const forgot_token = tokenizer.generateActionToken(actionTypesEnum.FORGOT_PASS);
+
+            await ActionToken.create({
+                forgot_token,
+                user: createdUser._id
+            });
+
+            await sendMail(email, emailAction.WELCOME, {
+                email,
+                newAdminPassword: `${ADMIN_PASSWORD_SET}/user/admin/set_password?actionToken=${forgot_token}`
+            });
+
+            res.status(statusCodes.OK).json('Admin created');
+        } catch (e) {
+            next(e);
+        }
+    }
 };

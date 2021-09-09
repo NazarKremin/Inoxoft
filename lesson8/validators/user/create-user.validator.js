@@ -19,7 +19,7 @@ module.exports = {
             .required(),
         password: Joi.string()
             .regex(regexpEnum.PASSWORD_REGEXP)
-            .required(),
+            .required()
     }),
 
     userLoginValidator: Joi.object({
@@ -63,5 +63,12 @@ module.exports = {
             .min(24)
             .max(24)
             .required()
+    }),
+
+    passwordValidator: Joi.object({
+        password: Joi.string()
+            .regex(regexpEnum.PASSWORD_REGEXP)
+            .required()
+            .trim()
     }),
 };

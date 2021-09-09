@@ -1,8 +1,9 @@
-const {User, O_Auth} = require('../dataBase/models');
-const { authService } = require('../service');
+const {User, O_Auth, ActionToken} = require('../dataBase/models');
+const { authService, mailService} = require('../service');
+const { FORGET_PASS_FRONT_URL} = require('../config');
 const { passwordHash, tokenizer } = require('../helpers');
 const ErrorHandler = require('../errors/error.messages');
-const {statusCodes, errorMessages, constans} = require("../constans");
+const {statusCodes, errorMessages, constans, actionTypesEnum, emailAction} = require("../constans");
 const {userUtils} = require("../utils");
 
 module.exports = {
@@ -80,6 +81,49 @@ module.exports = {
             next(e);
         }
     },
+
+    forgotPassword: async (req, res, next) => {
+        try {
+            const { user } = req;
+
+            const forgot_token = tokenizer.generateActionToken(actionTypesEnum.FORGOT_PASS);
+
+            await ActionToken.create({token: forgot_token, user: user._id});
+            // await O_Auth.deleteMany({user: currentUser._id});
+
+            await mailService.sendMail(user.email, emailAction.FORGOT_PASSWORD, {
+                forgotPasswordURL:`${FORGET_PASS_FRONT_URL}/forgot?token=${forgot_token}`
+            });
+
+            res.json('Email was sent');
+
+            next();
+        } catch (e) {
+            next(e);
+        }
+    },
+
+    setNewPassword: async (req, res, next) => {
+        try{
+            const {currentUser, body} = req;
+
+            const forgot_token = req.get(constans.AUTHORIZATION);
+
+            const hashPass = await passwordHash.hash(body.password);
+
+            await User.findByIdAndUpdate(currentUser._id, {password: hashPass});
+
+            await ActionToken.deleteOne({ forgot_token });
+
+            await O_Auth.deleteMany({user: currentUser._id});
+
+            res.json('Passweord Set');
+
+            next();
+        } catch (e) {
+            next(e);
+        }
+    }
 
     // getAuthUser: async (req, res, next) => {
     //     try {
