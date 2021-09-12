@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const expressFileUpload = require('express-fileupload');
 
 const app = express();
 
@@ -15,6 +16,7 @@ _connectDB();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use('/', apiRouter);
+app.use(expressFileUpload());
 
 app.listen(PORT, () => {
     console.log('Server work');

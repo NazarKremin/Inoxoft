@@ -26,6 +26,9 @@ const userSchema = new Schema({
       default: userRole.USER,
       enum: [userRole.USER, userRole.ADMIN]
     },
+    avatar: {
+      type: String
+    },
     car: [{
         type: Schema.Types.ObjectId
     }],

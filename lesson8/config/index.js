@@ -10,4 +10,9 @@ module.exports = {
 
     ROOT_EMAIL: process.env.ROOT_EMAIL || 'inox0ftest@gmail.com',
     ROOT_EMAIL_PASSWORD: process.env.ROOT_EMAIL_PASSWORD || 'otestetstets',
+
+    AWS_S3_REGION: process.env.AWS_S3_REGION,
+    AWS_S3_NAME: process.env.AWS_S3_NAME,
+    AWS_S3_ACCESS_KEY: process.env.AWS_S3_ACCESS_KEY,
+    AWS_S3_SECRET_KEY: process.env.AWS_S3_SECRET_KEY
 };

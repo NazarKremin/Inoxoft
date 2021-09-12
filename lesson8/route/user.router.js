@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const { userController } = require('../controller');
-const { authMiddleware, userMiddleware } = require('../middleware');
+const { authMiddleware, userMiddleware, fileMiddleware} = require('../middleware');
 
 const { userRole } = require('../constans');
 
@@ -20,6 +20,7 @@ router.get('/',
 
 router.post('/',
     // userMiddleware.checkNewUserValidation,
+    // fileMiddleware.checkUserAvatar,
     userMiddleware.getUserByDynamicPara('email'),
     // userMiddleware.isUserTrue,
     // userMiddleware.isUserHave,

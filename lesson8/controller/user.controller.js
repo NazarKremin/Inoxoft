@@ -2,7 +2,7 @@ const { userService, mailService } = require('../service');
 const { statusCodes, emailAction, errorMessages, userRole, actionTypesEnum} = require('../constans')
 const { passwordHash, tokenizer } = require('../helpers');
 const ErrorHandler = require('../errors/error.messages');
-const { userUtils } = require('../utils');
+const { userUtils, fileUtils} = require('../utils');
 const {User, ActionToken} = require("../dataBase/models");
 const {sendMail} = require("../service/mail.service");
 const {ADMIN_PASSWORD_SET} = require("../config");
@@ -10,17 +10,27 @@ const {ADMIN_PASSWORD_SET} = require("../config");
 module.exports = {
     createUser: async (req, res, next) => {
         try {
-            const { body: { password, email } } = req;
+            const { body: { password, email }, files: {avatar} } = req;
 
             const hasPassword = await passwordHash.hash(password);
 
-            const user = await userService.createUser({ ...req.body, password: hasPassword });
+            let user = await userService.createUser({ ...req.body, password: hasPassword });
+
+            if (avatar) {
+                const { _id } = user;
+
+                const uploadFile = await fileUtils.upload(avatar, 'user', _id.toString());
+
+                user = await User.findByIdAndUpdate(_id, {avatar: uploadFile.Location}, {new: true});
+            }
 
             await mailService.sendMail(email, emailAction.WELCOME, {
                 userName: email,
             });
 
-            res.status(statusCodes.CRATED).json('User done');
+            const normalizedUser = userUtils.userNormalizer(user);
+
+            res.status(statusCodes.CRATED).json(normalizedUser);
         } catch (e) {
             next(e);
         }

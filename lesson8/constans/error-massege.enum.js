@@ -50,5 +50,11 @@ module.exports = {
     },
     WRONG_TOKEN_TYPE: {
         en: 'Wrong token type'
+    },
+    FILE_IS_TOO_BIG: (name) => {
+       return {en: `File ${name} is too big`}
+    },
+    WRONG_FILE_FORMAT: (name) => {
+        return {en: `Wrong file format ${name}`}
     }
 };
