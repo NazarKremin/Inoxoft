@@ -3,6 +3,7 @@ class ErrorHandler extends Error {
         super(message);
         this.status = status;
 
+
         Error.captureStackTrace(this, this.constructor);
     }
 }

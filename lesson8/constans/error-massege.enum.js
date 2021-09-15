@@ -56,5 +56,8 @@ module.exports = {
     },
     WRONG_FILE_FORMAT: (name) => {
         return {en: `Wrong file format ${name}`}
-    }
+    },
+    CORS_ORIGIN_NOT_ALLOWED: {
+      en: 'CORS_NOT_ALLOWED'
+    },
 };
